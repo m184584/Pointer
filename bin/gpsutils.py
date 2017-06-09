@@ -35,6 +35,10 @@ class GpsUtils(object):
         ecef = [x, y, z]
         return ecef
 
+    def enu2azel(self, enu):
+        azimuth = atan2(enu[0],enu[1])
+        elevation = atan2(enu[2], sqrt(enu[0]**2+enu[1]**2))
+        return [azimuth,elevation]
 
     def enu2ecef(self, obj_enu, ref_lla):
         # Converts object enu position with respect to a reference lat, long,
