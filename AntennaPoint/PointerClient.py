@@ -1,7 +1,7 @@
 import argparse, datetime, logging, pprint, sys
 import time, serial
 
-from bin import mbedread, gpsutils, proxy_mavlink
+from bin import gpsutils, proxy_mavlink
 
 
 #initialize the stream of data between pixhawk and computer
@@ -29,13 +29,12 @@ def stream(args):
         #output these values as degree values
         output = '%.5f,%.5f\\n' % (helper.rad2deg(aziele[0]),helper.rad2deg(aziele[1]))
         pprint.pprint(output)
-        #mbedread.serwrite(antenna,output)
 
 def set_home(args):
     pprint.pprint('setting home...')
     #Home is defined as the position of GPS device, connected via serial below
     gps = serial.Serial(args.gpsdevice, 9600, timeout=5, parity=serial.PARITY_NONE)
-    time.sleep(1)
+    time.sleep(0.5)
     #read values that are being sent over the serial port
     serialinput = gps.readline()
     #making a matrix deliminated by the commas
@@ -55,7 +54,7 @@ def calibrate(args):
     while(feed!='m'):
         #run the calibration sequence until the character 'm' is inputed
         feed = raw_input('>>>')
-        mbedread.serwrite(antenna,feed)
+        antenna.write(feed)
 
 
 def main():

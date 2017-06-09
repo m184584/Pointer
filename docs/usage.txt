@@ -1,0 +1,24 @@
+Antenna Pointing Client Usage:
+
+Requires:
+pymavlink, pyserial, argparse, pprint, etc.
+Solution:
+pip install [required package name]
+
+usage from CMD:
+python AntennaPoint/PointerClient.py --serialout COM16 --gpsdevice COM22/
+    --device 127.0.0.1:14502 calibrate||stream
+
+calibrate: Runs the calibration routine from the antenna pointing mbed.
+This routine must be run before doing anything.
+
+stream: Scans GPS position of antenna from the GPS microcontroller over serial connection,
+and sends azimuth/elevation angles to the antenna controller microcontroller
+over serial connection. Depends on antenna mbed being properly calibrated.
+
+--serialout: The serial COM Port for the antenna microcontroller (COMxx)
+
+--gpsdevice: The serial COM Port for the gps microcontroller (COMxx)
+
+--device: network address for MAVLINK packets from the Pixhawk. This connection
+comes from a UDP port sent out by MAVProxy. (127.0.0.1:1450x)

@@ -1,11 +1,10 @@
-from bin import mbedread
 import serial, urllib2, time
 
 ser1_gps = serial.Serial("COM21", 9600)
 
 while(1):
 
-    statement = mbedread.serread(ser1_gps)
+    statement = ser1_gps.readline()
 
     combined = statement.split(',')
 

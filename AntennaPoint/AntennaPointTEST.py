@@ -7,7 +7,7 @@ import serial, urllib2, time
 #ser1_gps.setBaudrate(9600)
 
 #set up second serial port to send azimuth and elevation to antenna pointer
-#ser2_antenna = serial.Serial("COM16", 115200,timeout=None,parity=serial.PARITY_NONE)
+ser2_antenna = serial.Serial("COM16", 115200,timeout=None,parity=serial.PARITY_NONE)
 #read gps position from antenna
 #lla1 = mbedread.serrerad(ser1_gps)
 lla1 = (0,0,0)
