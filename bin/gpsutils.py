@@ -60,7 +60,7 @@ class GpsUtils(object):
         return ecef
 
     def lla2enu(self, obj_lla, ref_lla):
-        # Converts object ecef position to enu with respect to a reference point
+        # Converts object enu position to enu with respect to a reference point
         phi = self.deg2rad(ref_lla[0])
         lmda = self.deg2rad(ref_lla[1])
         ref_ecef = self.lla2ecef(ref_lla)

@@ -17,19 +17,27 @@ def stream(args):
     plane_telemetry = proxy_mavlink.MavlinkParser(args.device)
     #connecting to the plane via serial port
     antenna = serial.Serial(args.serialout, 115200, timeout=5, parity=serial.PARITY_NONE)
-    while(1):
-        #isolating data from the pixhawk
-        telemetry  = plane_telemetry.get_telemetry()
-        #parsing telementry data into a matrix of lla format
-        plane_lla = [telemetry.latitude,telemetry.longitude,telemetry.altitude_msl]
-        #converting lla to enu
-        enu = helper.lla2enu(home_lla,plane_lla)
-        #converting enu to azimuth and elevation
-        aziele = helper.enu2azel(enu)
-        #output these values as degree values
-        output = '%.5f,%.5f\\n' % (helper.rad2deg(aziele[0]),helper.rad2deg(aziele[1]))
-        pprint.pprint(output)
+    log = open('Test/log.txt','w+')
 
+    try:
+        while True:
+            #isolating data from the pixhawk
+            telemetry  = plane_telemetry.get_telemetry()
+            #parsing telementry data into a matrix of lla format
+            plane_lla = [telemetry.latitude,telemetry.longitude,telemetry.altitude_msl]
+            #converting lla to enu
+            enu = helper.lla2enu(plane_lla,home_lla)
+            #converting enu to azimuth and elevation
+            aziele = helper.enu2azel(enu)
+            #output these values as degree values
+            output = '%.5f,%.5f\\n' % (helper.rad2deg(aziele[0]),helper.rad2deg(aziele[1]))
+            antenna.write(output)
+            logdata = 'enu: ' + str(enu) + ' output: ' + str(aziele) + ' plane_lla: ' + str(plane_lla) + ' home: ' + str(home_lla)
+            log.write(logdata)
+            pprint.pprint('Azimuth: %f, Elevation: %f.' % (helper.rad2deg(aziele[0]),helper.rad2deg(aziele[1])))
+    except KeyboardInterrupt:
+        log.close()
+        pass
 def set_home(args):
     pprint.pprint('setting home...')
     #Home is defined as the position of GPS device, connected via serial below

@@ -22,8 +22,8 @@ class MavlinkParser(object):
 
 
     def mavlink_alt(self,dist):
-        """Converts a MAVLink packet millimeter format to decimal feet."""
-        return dist * 0.00328084
+        """Converts a MAVLink packet millimeter format to decimal meters."""
+        return dist * 1000.0
 
 
     def mavlink_heading(self,heading):
