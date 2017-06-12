@@ -29,6 +29,8 @@ def stream(args):
             enu = helper.lla2enu(plane_lla,home_lla)
             #converting enu to azimuth and elevation
             aziele = helper.enu2azel(enu)
+            if aziele[0] < 0:
+                aziele[0] = 0
             #output these values as degree values
             output = '%.5f,%.5f\\n' % (helper.rad2deg(aziele[0]),helper.rad2deg(aziele[1]))
             antenna.write(output)
