@@ -29,14 +29,14 @@ def stream(args):
             enu = helper.lla2enu(plane_lla,home_lla)
             #converting enu to azimuth and elevation
             aziele = helper.enu2azel(enu)
-            if aziele[0] < 0:
-                aziele[0] = 0
+            if aziele[1] < 0:
+                aziele[1] = 0
             #output these values as degree values
-            output = '%.5f,%.5f\\n' % (helper.rad2deg(aziele[0]),helper.rad2deg(aziele[1]))
+            output = '%.5f,%.5f\\n' % (helper.rad2deg(aziele[1]),helper.rad2deg(aziele[0]))
             antenna.write(output)
-            logdata = 'enu: ' + str(enu) + ' output: ' + str(aziele) + ' plane_lla: ' + str(plane_lla) + ' home: ' + str(home_lla)
+            logdata = 'enu: ' + str(enu) + ' output: ' + str(aziele) + ' plane_lla: ' + str(plane_lla) + ' home: ' + str(home_lla) + '\\n'
             log.write(logdata)
-            pprint.pprint('Azimuth: %f, Elevation: %f.' % (helper.rad2deg(aziele[0]),helper.rad2deg(aziele[1])))
+            pprint.pprint('Elevation: %f, Azimuth: %f.' % (helper.rad2deg(aziele[1]),helper.rad2deg(aziele[0])))
     except KeyboardInterrupt:
         log.close()
         pass
